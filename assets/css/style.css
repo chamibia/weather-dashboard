@@ -1,11 +1,15 @@
+body {
+    font-family: 'Courier New', Courier, monospace; ;
+}
+
 header {
     background-color: #000120; 
 }
-div.title {
+.title {
     color: yellowgreen; 
     text-align: center;
 }
-div.title h1 {
+.title h1 {
     padding: 10px; 
 }
 
@@ -13,43 +17,42 @@ main.dashed {
     background-color: black;
 }
 
-div.recent-searches h2 {
+.recent-searches h2 {
     font-size: 10px;
 }
-div.cityList {
+.cityList {
     margin-top: 20px;
 }
-div.city {
+.city {
     padding: 10px; 
 }
-div.cityName {
+.cityName {
     background-color:white;
     color: black;
 }
-div.currentWeather {
+.currentWeather {
     margin-bottom: 80px;
     background-color: lightgrey; 
     
 }
-div.currentWeather h2,
-div.currentWeather h3 {
+.currentWeather h2,
+.currentWeather h3 {
     font-size: 11px; 
     margin: 10px; 
 }
 span#uv-index {
     color: white;
 }
-div.fiveDay h2 {
+.fiveDay h2 {
     font-size: 15px; 
-    font-weight: bold;
     color: red; 
     text-align: center;
 }
-div.fiveDay p {
+.fiveDay p {
     font-size: 11px;
     
 }
-div.fiveDay p.card-title {
+.fiveDay p.card-title {
     font-weight: bold;
     color: white; 
 }
