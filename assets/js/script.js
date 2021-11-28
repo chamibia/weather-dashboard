@@ -26,6 +26,7 @@ fetch(queryURL)
     return response.json(); //turns it into javascript 
   })
   .then(function(data) {
+    console.log(data);
 
         weathertodayEl.classList.remove("d-none"); 
     
@@ -35,16 +36,16 @@ fetch(queryURL)
     var month = todaysDate.getMonth() + 1; 
     var year = todaysDate.getFullYear();
     nameEl.innerHTML = response.data.name + "(" + month + day + year + ")";
-    var weatherImage = response.data.weather[0].icon;  
+    var weatherImage = data.weather[0].icon;  
     picEl.setAttribute("src", 'http://openweathermap.org/img/wn/' + weatherImage + "@2x.png");
-    picEl.setAttribute("alt", response.data.weather[0].description);
-    humidityEl.innerHTML = "Humidity: " + response.data.main.humidity + "%"; 
-    tempEl.innerHTML = "Temperature: " + k2f(response.data.main.temp) + "&#176F"; 
-    windEl.innerHTML = "Wind: " + response.data.wind.speed + "MPH"; 
+    picEl.setAttribute("alt", data.weather[0].description);
+    humidityEl.innerHTML = "Humidity: " + data[0].humidity + "%"; 
+    tempEl.innerHTML = "Temperature: " + data[0].temp + "&#176F"; 
+    windEl.innerHTML = "Wind: " + data[0].wind.speed + "MPH"; 
   
     //UV Index 
-    var lat = response.data.coord.lat; 
-    var lon = response.data.coord.lon; 
+    var lat = data[0].lat; 
+    var lon = data[0].lon; 
     var UVQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey;
     console.log(openWeather);
 
@@ -54,6 +55,7 @@ fetch(queryURL)
         return response.json();
     })
     .then(function(data){
+        console.log(data);
 
     })
         var UVI = document.createElement("span"); 
@@ -79,9 +81,16 @@ fetch(queryURL)
 
 
 //5 day forest for city 
-var cityID = response.data.city.name; 
+var cityName = data[0].name; 
 var weatherQueryURL = "http://api.openweathermap.org/data/2.5/forecast?id" + cityID + "&appid=" + APIKey; 
-//add fetch {
+fetch(weatherQueryURL)
+.then(function(response){
+    return response.json();
+})
+.then(function(data){
+    console.log(data);
+
+})
     fiveDayEl.classList.remove("d-none"); 
 
 //Response to show for the next 5 days
@@ -111,8 +120,7 @@ for(i = 0; i < forecastEl.length; i++) {
     forecastEl[i].append(weatherHumidEl); 
 
     }
-}); 
-
+ 
 //history from local storage
 searchCity.addEventListener("click", function () {
     var searchItem = cityEl.value;
@@ -148,4 +156,3 @@ getHistory();
         getWeather(searchHistory[searchHistory.length - 1]);
     }
 }
-
