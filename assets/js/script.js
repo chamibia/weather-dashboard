@@ -1,6 +1,5 @@
-function loadWeather () {
     var cityEl =  document.getElementById("city-input"); 
-    var searchCity = document.getElementById("search-btn"); 
+    var fetchButton = document.getElementById("search-btn"); 
     var clearSearch = document.getElementById("clear-btn");
     var nameEl = document.getElementById("city-name"); 
     var picEl = document.getElementById("current-pic"); 
@@ -16,16 +15,22 @@ function loadWeather () {
 // // openWeather API 
 var APIKey = "13ea394a45987d6b455b7b721f41dce7";
 
+fetchButton.addEventListener('click', openWeather);
+
+
 function openWeather(cityName) {
     //get request from open weather api 
 var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName  + "&appid=" + APIKey;
-axios.get(queryURL)
-.then(function(response) {
+fetch(queryURL)
+.then(function(response) { //is json 
+    return response.json(); //turns it into javascript 
+  })
+  .then(function(data) {
 
         weathertodayEl.classList.remove("d-none"); 
     
     //parse response to display current weather 
-    var todaysDate = new Date(response.data.dt * 1000); 
+    var todaysDate = new Date(response.data.dt); 
     var day = todaysDate.getDate();
     var month = todaysDate.getMonth() + 1; 
     var year = todaysDate.getFullYear();
@@ -36,13 +41,21 @@ axios.get(queryURL)
     humidityEl.innerHTML = "Humidity: " + response.data.main.humidity + "%"; 
     tempEl.innerHTML = "Temperature: " + k2f(response.data.main.temp) + "&#176F"; 
     windEl.innerHTML = "Wind: " + response.data.wind.speed + "MPH"; 
-
+  
     //UV Index 
     var lat = response.data.coord.lat; 
     var lon = response.data.coord.lon; 
-    var UVQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&cnt=1";
-    axios.get(UVQueryURL)
-    .then(function (response) {
+    var UVQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey;
+    console.log(openWeather);
+
+    
+    fetch(UVQueryURL)
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data){
+
+    })
         var UVI = document.createElement("span"); 
 
         // green for good, ok for yell, red for bad 
@@ -58,21 +71,21 @@ axios.get(queryURL)
 
         console.log(response.data[0].value);
         UVI.innerHTML = response.data[0].value; 
-        UVEl.innerHTML = "UV Index: "
+        UVEl.innerHTML = "UV Index: ";
         UVEl.append(UVI);
 
+    
     });
 
+
 //5 day forest for city 
-var cityID = response.data.id; 
+var cityID = response.data.city.name; 
 var weatherQueryURL = "http://api.openweathermap.org/data/2.5/forecast?id" + cityID + "&appid=" + APIKey; 
-axios.get(weatherQueryURL)
-.then (function (response) {
+//add fetch {
     fiveDayEl.classList.remove("d-none"); 
 
 //Response to show for the next 5 days
 var forecastEl = document.querySelectorAll(".forecast"); 
-
 for(i = 0; i < forecastEl.length; i++) {
     forecastEl[i].innerHTML = ""; 
     var weatherIndex = i * 8 + 4; 
@@ -96,8 +109,8 @@ for(i = 0; i < forecastEl.length; i++) {
     var weatherHumidEl = document.createElement("p"); 
     weatherHumidEl.innerHTML = "Humidity: " + response.data.list[weatherIndex].main.humidity + "%"; 
     forecastEl[i].append(weatherHumidEl); 
-        }
-    })
+
+    }
 }); 
 
 //history from local storage
@@ -116,26 +129,23 @@ clearSearch.addEventListener("click", function () {
     renderHistory();
 })
 
-function getSearchHistory () {
-    historyEl.innerHTML = ""; 
-    for(var i = 0; i < searchHistory.length; i++) {
-        var pastHistory = document.createElement("input"); 
-        pastHistory.setAttribute("type", "text"); 
-        pastHistory.setAttribute("readonly", true); 
-        pastHistory.setAttribute("class", "form-control d-block bg-white");
-        pastHistory.setAttribute("value", searchHistory[i]); 
-        pastHistory.addEventListener("click", function () {
-            getWeather(pastHistory.value);
-
-        }) 
-        historyEl.append(pastHistory);
+function getHistory () {
+    var storage = json.parse(localStorage.getItem('weatherHistory'));
+    if(storage === null) {
+        searchHistory.textContent = "No History";
+    } else {
+        searchHistory.textContent = ''; 
+    } 
+    for(var i=0; i <storage.length; i++) {
+        var historyBtn = document.createElement('button');
+        historyBtn.setAttribute = storage[i]; 
+        searchHistory.appendChild(historyBtn); 
     }
 }
 
-renderHistory(); 
+getHistory(); 
     if(searchHistory.length > 0) {
         getWeather(searchHistory[searchHistory.length - 1]);
     }
 }
 
-loadWeather(); 
