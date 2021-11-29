@@ -10,7 +10,7 @@
     var historyEl = document.getElementById("history");
     var fiveDayEl = document.getElementById("fiveday-chart"); 
     var weathertodayEl = document.getElementById("weather-today"); 
-    var searchHistory = JSON.parse(localStorage.getItem ("search")) || [];
+   // var searchHistory = JSON.parse(localStorage.getItem ("search")) || [];
 
 // // openWeather API 
 var APIKey = "13ea394a45987d6b455b7b721f41dce7";
@@ -20,7 +20,7 @@ fetchButton.addEventListener('click', openWeather);
 
 function openWeather(cityName) {
     //get request from open weather api 
-var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName  + "&appid=" + APIKey;
+var queryURL = "http://api.openweathermap.org/geo/1.0/direct?=" + cityName  + "&limit=&appid=" + APIKey;
 fetch(queryURL)
 .then(function(response) { //is json 
     return response.json(); //turns it into javascript 
@@ -31,7 +31,7 @@ fetch(queryURL)
         weathertodayEl.classList.remove("d-none"); 
     
     //parse response to display current weather 
-    var todaysDate = new Date(response.data.dt); 
+    var todaysDate = new Date(data.list[0].dt); 
     var day = todaysDate.getDate();
     var month = todaysDate.getMonth() + 1; 
     var year = todaysDate.getFullYear();
@@ -46,49 +46,51 @@ fetch(queryURL)
     //UV Index 
     var lat = data[0].lat; 
     var lon = data[0].lon; 
-    var UVQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey;
-    console.log(openWeather);
+    var UVQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" 
+    + lat + "&lon=" 
+    + lon + 
+    "&exclude=minutely,hourly,alerts&units=metric&appid=" + APIKey;
 
     
     fetch(UVQueryURL)
     .then(function(response){
         return response.json();
-    })
-    .then(function(data){
-        console.log(data);
+    }) 
+    .then(function(UVResults){
+        console.log(UVResults);
 
-    })
+     //signaling end of function
         var UVI = document.createElement("span"); 
 
         // green for good, ok for yell, red for bad 
-        if(response.data[0].value < 4){
+        if(UVResults[0].value < 4){
             UVI.setAttribute("class", "badge badge-success"); 
         }
-        else if(response.data[0].value < 8) {
+        else if(UVResults[0].value < 8) {
             UVI.setAttribute("class", "badge badge-warning"); 
         }
         else {
             UVI.setAttribute("class", "badge badge-danger");
         }
-
-        console.log(response.data[0].value);
-        UVI.innerHTML = response.data[0].value; 
+   
+        console.log(UVResults[0].value);
+        UVI.innerHTML = UVResults[0].value; 
         UVEl.innerHTML = "UV Index: ";
         UVEl.append(UVI);
 
     
-    });
-
+    }); //end of statement, optional 
+}) //anything betw
 
 //5 day forest for city 
-var cityName = data[0].name; 
+var cityName = getCity[0].name; 
 var weatherQueryURL = "http://api.openweathermap.org/data/2.5/forecast?id" + cityID + "&appid=" + APIKey; 
 fetch(weatherQueryURL)
 .then(function(response){
     return response.json();
 })
-.then(function(data){
-    console.log(data);
+.then(function(cityID){
+    console.log(cityID);
 
 })
     fiveDayEl.classList.remove("d-none"); 
@@ -98,7 +100,7 @@ var forecastEl = document.querySelectorAll(".forecast");
 for(i = 0; i < forecastEl.length; i++) {
     forecastEl[i].innerHTML = ""; 
     var weatherIndex = i * 8 + 4; 
-    var weatherDate = new Date(response.data.forecast[weatherIndex].dt * 1000); 
+    var weatherDate = new Date(cityID.forecast[weatherIndex].dt * 1000); 
     var weatherDay = weatherDate.getDate(); 
     var weatherMonth = weatherDate.getMonth() + 1; 
     var weatherYear = weatherDate.getFullYear(); 
