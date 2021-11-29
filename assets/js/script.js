@@ -20,15 +20,13 @@ fetchButton.addEventListener('click', openWeather);
 
 function openWeather(cityName) {
     //get request from open weather api 
-var queryURL = "http://api.openweathermap.org/geo/1.0/direct?=" + cityName  + "&limit=&appid=" + APIKey;
+var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName  + "&appid=" + APIKey;
 fetch(queryURL)
 .then(function(response) { //is json 
     return response.json(); //turns it into javascript 
   })
   .then(function(data) {
     console.log(data);
-
-        weathertodayEl.classList.remove("d-none"); 
     
     //parse response to display current weather 
     var todaysDate = new Date(data.list[0].dt); 
@@ -46,10 +44,11 @@ fetch(queryURL)
     //UV Index 
     var lat = data[0].lat; 
     var lon = data[0].lon; 
-    var UVQueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" 
+    var UVQueryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" 
     + lat + "&lon=" 
     + lon + 
-    "&exclude=minutely,hourly,alerts&units=metric&appid=" + APIKey;
+    "&units=metric" +
+    "&appid=" + APIKey;
 
     
     fetch(UVQueryURL)
@@ -80,10 +79,9 @@ fetch(queryURL)
 
     
     }); //end of statement, optional 
-}) //anything betw
+}) 
 
 //5 day forest for city 
-var cityName = getCity[0].name; 
 var weatherQueryURL = "http://api.openweathermap.org/data/2.5/forecast?id" + cityID + "&appid=" + APIKey; 
 fetch(weatherQueryURL)
 .then(function(response){
@@ -93,14 +91,13 @@ fetch(weatherQueryURL)
     console.log(cityID);
 
 })
-    fiveDayEl.classList.remove("d-none"); 
 
 //Response to show for the next 5 days
 var forecastEl = document.querySelectorAll(".forecast"); 
 for(i = 0; i < forecastEl.length; i++) {
     forecastEl[i].innerHTML = ""; 
     var weatherIndex = i * 8 + 4; 
-    var weatherDate = new Date(cityID.forecast[weatherIndex].dt * 1000); 
+    var weatherDate = new Date(cityID.forecast[weatherIndex].dt); 
     var weatherDay = weatherDate.getDate(); 
     var weatherMonth = weatherDate.getMonth() + 1; 
     var weatherYear = weatherDate.getFullYear(); 
@@ -111,14 +108,14 @@ for(i = 0; i < forecastEl.length; i++) {
 
     //icons for current weather forecast
     var weatherForecastEl = document.createElement ("img"); 
-    weatherForecastEl.setAttribute("src", "https://openweathermap.org/img/wn/" + response.data.list[forecastIndex].weather[0].icon + "@2x.png"); 
-    weatherForecastEl.setAttribute("alt", response.data.list[weatherIndex].weather[0].description);
+    weatherForecastEl.setAttribute("src", "https://openweathermap.org/img/wn/" + list[forecastIndex].weather[0].icon + "@2x.png"); 
+    weatherForecastEl.setAttribute("alt", list[weatherIndex].weather[0].description);
     forecastEl[i].append(weatherForecastEl); 
     var weatherTempEl = document.createElement("p"); 
-    weatherTempEl.innerHTML = "Temp: " + k2f(response.data.list[weatherIndex].main.temp) + "&#176F"; 
+    weatherTempEl.innerHTML = "Temp: " + k2f(list[weatherIndex].main.temp) + "&#176F"; 
     forecastEl[i].append(weatherTempEl); 
     var weatherHumidEl = document.createElement("p"); 
-    weatherHumidEl.innerHTML = "Humidity: " + response.data.list[weatherIndex].main.humidity + "%"; 
+    weatherHumidEl.innerHTML = "Humidity: " + list[weatherIndex].main.humidity + "%"; 
     forecastEl[i].append(weatherHumidEl); 
 
     }
