@@ -33,9 +33,9 @@ fetch(queryURL)
     var day = todaysDate.getDate();
     var month = todaysDate.getMonth() + 1; 
     var year = todaysDate.getFullYear();
-    nameEl.innerHTML = response.data.name + "(" + month + day + year + ")";
+    nameEl.innerHTML = data.name + "(" + month + day + year + ")";
     var weatherImage = data.weather[0].icon;  
-    picEl.setAttribute("src", 'http://openweathermap.org/img/wn/' + weatherImage + "@2x.png");
+    picEl.setAttribute("src", 'http://openweathermap.org/img/wn/' + weatherImage);
     picEl.setAttribute("alt", data.weather[0].description);
     humidityEl.innerHTML = "Humidity: " + data[0].humidity + "%"; 
     tempEl.innerHTML = "Temperature: " + data[0].temp + "&#176F"; 
@@ -78,7 +78,7 @@ fetch(queryURL)
         UVEl.append(UVI);
 
     
-    }); //end of statement, optional 
+    }); 
 }) 
 
 //5 day forest for city 
