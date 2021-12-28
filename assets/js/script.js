@@ -1,5 +1,5 @@
 // openWeather API  to get weather information
-var APIKey = "13ea394a45987d6b455b7b721f41dce7";
+var APIKey = "479d025d088cdba7d7a53e604efa0c02";
 
 //Global variables
 var searchCity = document.querySelector("#search-bar");
@@ -43,7 +43,7 @@ function getCurrentHistory() {
 
       //add eventLister for the history button
       historyBtn.addEventListener("click", function (event) {
-        getCurrent(event.target.id);
+        getCurrentWeather(event.target.id);
       });
     }
   }
@@ -57,6 +57,7 @@ function getCurrentWeather(cityName) {
   fetch(
     "https://api.openweathermap.org/data/2.5/weather?q=" +
       cityName +
+      "&appid=" +
       APIKey +
       "&units=metric"
   )
@@ -130,6 +131,7 @@ function fiveDayForecast(lat, lon) {
           "src",
           "https://openweathermap.org/img/wn/" + icon + "@2x.png"
         );
+        card.append(iconImage);
         card.append(iconImage);
 
         var windFiveDay = document.createElement("p");
