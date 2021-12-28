@@ -1,66 +1,62 @@
-body {
-    font-family: 'Courier New', Courier, monospace; ;
-}
-
 header {
-    background-color: #000120; 
+  background-color: lightblue;
+  text-align: center;
+  padding: 20px;
+  color: gainsboro;
 }
-.title {
-    color: yellowgreen; 
-    text-align: center;
+.top-container {
+  text-align: center;
+  padding-left: 40px;
+  padding-top: 40px;
 }
-.title h1 {
-    padding: 10px; 
+.main-container {
+  border: 2px solid black;
+  margin-bottom: 20px;
+  text-align: left;
+  padding: 10px 0px 12px 20px;
+}
+.btn {
+  margin: 20px 10px 20px 15px;
+  width: 100%;
+  border-bottom: solid 3px black;
+}
+.button-history {
+  padding: 10px 0 10px 0;
+  width: 70%;
+  background-color: black;
+  color: wheat;
+  border-radius: 5px;
+  margin-top: 15px;
+  justify-content: center;
+}
+.uvIndex {
+  width: 50px;
+  border-radius: 5px;
+}
+.current-forecast {
+  padding: 30px 40px 30px 40px;
+  margin-right: 0;
+  width: 70%;
+  margin-left: 30px;
+}
+.five-day-forecast {
+  position: absolute;
+}
+.cards-container {
+  text-align: left;
+}
+.card-body {
+  width: 100px;
+  height: 350px;
+  margin: 10px 10px 20px 10px;
+  color: ghostwhite;
+  background-color: gray;
 }
 
-main.dashed {
-    background-color: black;
-}
-
-.recent-searches h2 {
-    font-size: 10px;
-}
-.cityList {
-    margin-top: 20px;
-}
-.city {
-    padding: 10px; 
-}
-.cityName {
-    background-color:white;
-    color: black;
-}
-.currentWeather {
-    margin-bottom: 80px;
-    background-color: lightgrey; 
-    
-}
-.currentWeather h2,
-.currentWeather h3 {
-    font-size: 11px; 
-    margin: 10px; 
-}
-span#uv-index {
-    color: white;
-}
-.fiveDay h2 {
-    font-size: 15px; 
-    color: red; 
-    text-align: center;
-}
-.fiveDay p {
-    font-size: 11px;
-    
-}
-.fiveDay p.card-title {
-    font-weight: bold;
-    color: white; 
-}
-.card {
-    background-color: lightblue; 
-    height: 200%;
-}
-.text-muted {
-    color: white !important;
-    text-align: left;
+@media screen and (max-width: 768px) {
+  .current-forecast {
+    padding: 20px 30px 20px 30px;
+    width: 100px;
+    margin-left: 0;
+  }
 }
