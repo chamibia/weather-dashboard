@@ -49,14 +49,13 @@ header {
   width: 100px;
   height: 350px;
   margin: 10px 10px 20px 10px;
-  color: ghostwhite;
   background-color: gray;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 760px) {
   .current-forecast {
     padding: 20px 30px 20px 30px;
-    width: 100px;
+    width: 80px;
     margin-left: 0;
   }
 }

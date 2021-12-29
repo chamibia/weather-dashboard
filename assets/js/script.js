@@ -71,7 +71,7 @@ function getCurrentWeather(cityName) {
       var lon = data.coord.lon;
       fiveDayForecast(lat, lon);
 
-      console.log("current", data);
+      //console.log("current", data);
 
       document.querySelector("#city-name").textContent = data.name;
       document.querySelector("#temp").textContent =
@@ -100,20 +100,19 @@ function fiveDayForecast(lat, lon) {
       return response.json();
     })
     .then(function (data) {
-      console.log("5 day", data);
-
-      document.querySelector("#uv").textContent = "UV:" + data.current.uvi;
+      document.querySelector("#uv").textContent = "UV: " + data.current.uvi;
       $("#uv").addClass("uvIndex");
       var uviIndex = document.querySelector("uvIndex");
 
       //create for loop to show weather for 5 days
-      document.querySelector(".five-days-forecast").textContent = "";
+
+      document.querySelector(".five-day-forescast").textContent = "";
       for (var i = 0; i < 5; i++) {
         //create card to show weather through script.js and append all to div
 
         var card = document.createElement("div");
         card.setAttribute("class", "card-body col-lg-2");
-        document.querySelector(".five-days-forecast").append(card);
+        document.querySelector(".five-day-forecast").append(card);
 
         var date = document.createElement("h3");
         date.textContent = moment()
@@ -122,25 +121,25 @@ function fiveDayForecast(lat, lon) {
         card.prepend(date);
 
         var fiveDayForecast = document.createElement("p");
-        fiveDayForecast.textContent = "Temp:" + data.daily[i].temp.day;
+        fiveDayForecast.textContent = "Temp: " + data.daily[i].temp.day;
         card.append(fiveDayForecast);
 
         var iconImage = document.createElement("img");
         var icon = data.daily[i].weather[0].icon;
         iconImage.setAttribute(
-          "src",
+          "href",
           "https://openweathermap.org/img/wn/" + icon + "@2x.png"
         );
-        card.append(iconImage);
+
         card.append(iconImage);
 
         var windFiveDay = document.createElement("p");
-        windFiveDay.textContent = "Wind:" + data.daily[i].wind_speed + "MPH";
+        windFiveDay.textContent = "Wind: " + data.daily[i].wind_speed + "MPH";
         card.append(windFiveDay);
 
         var humidityFiveDay = document.createElement("p");
         humidityFiveDay.textContent =
-          "Humidity:" + data.daily[i].humidity + "%";
+          "Humidity: " + data.daily[i].humidity + "%";
         card.append(humidityFiveDay);
       }
     });
