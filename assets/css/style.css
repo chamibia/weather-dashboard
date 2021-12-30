@@ -1,8 +1,11 @@
+* {
+  font-family: "Lucida Console", "Courier New", monospace;
+}
 header {
   background-color: lightblue;
   text-align: center;
   padding: 20px;
-  color: gainsboro;
+  color: black;
 }
 .top-container {
   text-align: center;

@@ -5,6 +5,7 @@ var APIKey = "479d025d088cdba7d7a53e604efa0c02";
 var searchCity = document.querySelector("#search-bar");
 var searchBtn = document.querySelector("#search-button");
 var searchHistory = document.querySelector("#search-history");
+var forecastEl = document.querySelector(".forecast");
 
 //eventListener for search Button
 searchBtn.addEventListener("click", getCity);
@@ -34,7 +35,11 @@ function getCurrentHistory() {
     searchHistory.textContent = "Add current History";
   } else {
     searchHistory.textContent = "";
-    for (var i = 0; i < currentStorage.length; i++) {
+    for (
+      var i = currentStorage.length - 1;
+      i > currentStorage.length - 6;
+      i--
+    ) {
       var historyBtn = document.createElement("button");
       historyBtn.setAttribute("id", currentStorage[i]);
       historyBtn.textContent = currentStorage[i];
@@ -106,32 +111,27 @@ function fiveDayForecast(lat, lon) {
 
       //create for loop to show weather for 5 days
 
-      document.querySelector(".five-day-forescast").textContent = "";
+      forecastEl.textContent = "";
       for (var i = 0; i < 5; i++) {
         //create card to show weather through script.js and append all to div
 
         var card = document.createElement("div");
         card.setAttribute("class", "card-body col-lg-2");
-        document.querySelector(".five-day-forecast").append(card);
+        //var something = document.querySelector(".forecast");
+        forecastEl.append(card);
+        console.log(forecastEl);
+        //something.append(card);
+        //.append(card);
 
         var date = document.createElement("h3");
         date.textContent = moment()
           .add(i + 1, "days")
-          .format("MM Do YY");
+          .format("MMMM DD ");
         card.prepend(date);
 
         var fiveDayForecast = document.createElement("p");
         fiveDayForecast.textContent = "Temp: " + data.daily[i].temp.day;
         card.append(fiveDayForecast);
-
-        var iconImage = document.createElement("img");
-        var icon = data.daily[i].weather[0].icon;
-        iconImage.setAttribute(
-          "href",
-          "https://openweathermap.org/img/wn/" + icon + "@2x.png"
-        );
-
-        card.append(iconImage);
 
         var windFiveDay = document.createElement("p");
         windFiveDay.textContent = "Wind: " + data.daily[i].wind_speed + "MPH";
@@ -141,6 +141,19 @@ function fiveDayForecast(lat, lon) {
         humidityFiveDay.textContent =
           "Humidity: " + data.daily[i].humidity + "%";
         card.append(humidityFiveDay);
+
+        var iconImage = document.createElement("img");
+        var icon = data.daily[i].weather[0].icon;
+        iconImage.setAttribute(
+          "src",
+          "https://openweathermap.org/img/wn/" + icon + "@2x.png"
+        );
+        console.log("https://openweathermap.org/img/wn/" + icon + "@2x.png");
+        card.append(iconImage);
+        iconImage.setAttribute(
+          "style",
+          "width:50px;height:45px; background: white;"
+        );
       }
     });
 }
