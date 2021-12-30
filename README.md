@@ -4,7 +4,7 @@
 
 ### The weather dashboard returns a 5-day forecast that displays the date, weather conditions, temperature, wind speed, UV Index and humidity.
 
-## A user is presented with presented with current and future conditions of that city.
+## A user is presented with current and future conditions of that city.
 
 ## Made with
 
