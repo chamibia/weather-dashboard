@@ -1,6 +1,19 @@
-# weather-dashboard
+# Weather-Dashboard
 
-## Gives the weather outlook for multiple cities 
+## A weather dashboard that allows you to look up multiple cities
 
-### It is a weather dashboard with form inputs, it will give a 5-day forecast that displays the date, an icon representing weather conditinos, temperature, wind speed, UV Index and humidity. A user is presented with current and future conditions of that city. 
+### The weather dashboard returns a 5-day forecast that displays the date, weather conditions, temperature, wind speed, UV Index and humidity.
 
+## A user is presented with presented with current and future conditions of that city.
+
+## Made with
+
+- HTML
+- CSS
+- Javascript
+- OpenWeather API
+- moment.js
+
+### Deployed URL: https://chamibia.github.io/weather-dashboard/
+
+### Made by Bianca Chami
