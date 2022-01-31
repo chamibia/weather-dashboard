@@ -14,6 +14,12 @@
 - OpenWeather API
 - moment.js
 
-### Deployed URL: https://chamibia.github.io/weather-dashboard/
+### Deployed URL:
 
-### Made by Bianca Chami
+https://chamibia.github.io/weather-dashboard/
+
+## Application Preview:
+
+![screenshot](./assets/images/weatherD.png)
+
+### Made by chamibia
